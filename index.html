@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Valoración de Vivienda</h1>
+        <h1>LLar Unica Valoración de vivienda</h1>
         <form id="valuationForm">
             <div class="form-section">
                 <h2>Datos de Contacto</h2>
@@ -71,6 +71,17 @@
                     </div>
                 </div>
 
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="bedrooms">Dirección *</label>
+                        <input type="text" id="direccion" name="direccion" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bathrooms">Número *</label>
+                        <input type="number" id="numero" name="numero" required>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="condition">Estado de Conservación *</label>
                     <select id="condition" name="condition" required>
@@ -114,18 +125,6 @@
             </div>
 
             <div class="form-section">
-                <h2>Documentación</h2>
-                <div class="form-group">
-                    <label>Imágenes (máx. 5)</label>
-                    <div class="file-upload">
-                        <input type="file" id="images" accept="image/*" multiple style="display: none">
-                        <button type="button" class="upload-btn" onclick="document.getElementById('images').click()">
-                            Subir imágenes
-                        </button>
-                        <span id="imageCount">0/5</span>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <label for="comments">Observaciones</label>
                     <textarea id="comments" name="comments" rows="3"></textarea>
@@ -133,10 +132,11 @@
             </div>
 
             <button type="submit" class="submit-btn">Calcular Valor Aproximado</button>
+            
 
             <div id="result" class="result">
                 <p class="result-value"></p>
-                <p class="result-note">*Este es un valor aproximado basado en los datos proporcionados y las condiciones actuales del mercado</p>
+                <p class="result-note">*Este es un valor aproximado basado en los datos proporcionados y las condiciones actuales del mercado. En ningún caso podrá ser considerado una tasación oficial. Llar Unica no se hace responsable del uso y decisiones que se tomen utilizando esta información, ya que es meramente orientativa.</p>
             </div>
         </form>
     </div>
@@ -144,17 +144,15 @@
     <script>
         const form = document.getElementById('valuationForm');
         const result = document.getElementById('result');
-        const imageInput = document.getElementById('images');
-        const imageCount = document.getElementById('imageCount');
 
-        // Precios base por ciudad (2024)
         const baseLocationPrices = {
-            'madrid': 3500,
-            'barcelona': 3800,
-            'valencia': 2200,
-            'sevilla': 2000,
-            'bilbao': 2800,
-            'malaga': 2400,
+            'sitges': 3200,
+            'barcelona': 3500,
+            'sant pere de ribes': 1565,
+            'les roquetes': 1565,
+            'begues': 2844,
+            'vilanova i la geltru': 2587,
+            'cunit': 1924,
             'default': 2500
         };
 
@@ -184,41 +182,58 @@
             'heating': 6000
         };
 
-        // Validación de imágenes
-        imageInput.addEventListener('change', function(e) {
-            const files = e.target.files;
-            if (files.length > 5) {
-                alert('Máximo 5 imágenes permitidas');
-                imageInput.value = '';
-            }
-            imageCount.textContent = `${Math.min(files.length, 5)}/5`;
-        });
-
-        // Validación del formulario
         function validateForm() {
             const phone = document.getElementById('phone').value;
             const email = document.getElementById('email').value;
-            
+
             const phoneRegex = /^[0-9]{9}$/;
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
+
             if (!phoneRegex.test(phone)) {
                 alert('Por favor, introduce un número de teléfono válido (9 dígitos)');
                 return false;
             }
-            
+
             if (!emailRegex.test(email)) {
                 alert('Por favor, introduce un correo electrónico válido');
                 return false;
             }
-            
+
             return true;
         }
 
-        // Cálculo de la valoración
-        form.addEventListener('submit', function(e) {
+        function formatWhatsAppMessage(formData, finalPrice) {
+            const amenities = formData.getAll('amenities');
+            const amenitiesText = amenities.length ? amenities.join(', ') : 'Ninguna';
+
+            return encodeURIComponent(
+                `*Nueva Solicitud de Valoración*\n\n` +
+                `*Datos de Contacto*\n` +
+                `Nombre: ${formData.get('name')}\n` +
+                `Teléfono: ${formData.get('phone')}\n` +
+                `Email: ${formData.get('email')}\n\n` +
+                `*Datos del Inmueble*\n` +
+                `Ciudad: ${formData.get('location')}\n` +
+                `Calle: ${formData.get('street')}\n` +  // Nueva línea
+                `Número: ${formData.get('number')}\n` +  // Nueva línea
+                `Tipo: ${formData.get('type')}\n` +
+                `Tamaño: ${formData.get('size')}m²\n` +
+                `Antigüedad: ${formData.get('age')} años\n` +
+                `Habitaciones: ${formData.get('bedrooms')}\n` +
+                `Baños: ${formData.get('bathrooms')}\n` +
+                `Estado: ${formData.get('condition')}\n\n` +
+                `*Características Adicionales*\n` +
+                `${amenitiesText}\n\n` +
+                `*Observaciones*\n` +
+                `${formData.get('comments') || 'Sin observaciones'}\n\n` +
+                `*Valoración Estimada*\n` +
+                `${Math.round(finalPrice).toLocaleString('es-ES')} €`
+            );
+        }
+
+        form.addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             if (!validateForm()) {
                 return;
             }
@@ -233,40 +248,34 @@
             const condition = formData.get('condition');
             const amenities = formData.getAll('amenities');
 
-            // Cálculo del precio base
             const basePrice = (baseLocationPrices[location] || baseLocationPrices.default) * size;
-
-            // Factor por antigüedad
             const ageFactor = Math.max(0.7, 1 - (age * 0.01));
-
-            // Factor por habitaciones y baños
             const bedroomMultiplier = 1 + ((bedrooms - 2) * 0.1);
             const bathroomMultiplier = 1 + ((bathrooms - 1) * 0.1);
 
-            // Precio ajustado
-            let adjustedPrice = basePrice * 
-                typeMultipliers[type] * 
-                ageFactor * 
+            let adjustedPrice = basePrice *
+                typeMultipliers[type] *
+                ageFactor *
                 conditionMultipliers[condition] *
                 bedroomMultiplier *
                 bathroomMultiplier;
 
-            // Ajuste por tamaño
             if (size > 150) adjustedPrice *= 0.95;
             if (size > 300) adjustedPrice *= 0.9;
 
-            // Valor de amenidades
-            const amenitiesValue = amenities.reduce((acc, amenity) => 
+            const amenitiesValue = amenities.reduce((acc, amenity) =>
                 acc + (amenityValues[amenity] || 0), 0);
 
-            // Precio final con ajuste de mercado
             const finalPrice = (adjustedPrice + amenitiesValue) * 1.05;
 
-            // Mostrar resultado
             result.classList.add('visible');
-            result.querySelector('.result-value').textContent = 
+            result.querySelector('.result-value').textContent =
                 `Valor estimado: ${Math.round(finalPrice).toLocaleString('es-ES')} €`;
+
+            const message = formatWhatsAppMessage(formData, finalPrice);
+            window.open(`https://wa.me/34613951684?text=${message}`, '_blank');
         });
     </script>
 </body>
+
 </html>
