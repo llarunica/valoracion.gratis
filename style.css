@@ -1,5 +1,4 @@
-
-       * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -7,9 +6,9 @@
         }
 
         body {
-            background: #f5f5f5;
+            background: var(--background-light);
             padding: 20px;
-            color: #333;
+            color: var(--secondary-color);
         }
 
         .container {
@@ -23,7 +22,7 @@
 
         h1 {
             text-align: center;
-            color: #2563eb;
+            color: var(--primary-dark);
             margin-bottom: 30px;
             font-size: 28px;
         }
@@ -31,12 +30,12 @@
         .form-section {
             margin-bottom: 30px;
             padding: 20px;
-            background: #f8fafc;
+            background: var(--background-light);
             border-radius: 8px;
         }
 
         .form-section h2 {
-            color: #1e40af;
+            color: var(--secondary-color);
             margin-bottom: 20px;
             font-size: 20px;
         }
@@ -57,7 +56,9 @@
             font-weight: 500;
         }
 
-        input, select, textarea {
+        input,
+        select,
+        textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #cbd5e1;
@@ -65,7 +66,9 @@
             font-size: 16px;
         }
 
-        input:focus, select:focus, textarea:focus {
+        input:focus,
+        select:focus,
+        textarea:focus {
             outline: none;
             border-color: #2563eb;
             box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
@@ -85,20 +88,6 @@
 
         .amenity-item input[type="checkbox"] {
             width: auto;
-        }
-
-        .file-upload {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .upload-btn {
-            padding: 8px 16px;
-            background: #e2e8f0;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
         }
 
         .submit-btn {
@@ -131,24 +120,5 @@
         .result.visible {
             display: block;
         }
-
-        .error {
-            color: #dc2626;
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: 20px;
-            }
-
-            .form-section {
-                padding: 15px;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-  
+    </style>
+       
