@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Valoración Inmobiliaria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563eb;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .form-section h2 {
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+        }
+
+        .amenity-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .amenity-item input[type="checkbox"] {
+            width: auto;
+        }
+
+        .file-upload {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-btn {
+            padding: 8px 16px;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .result.visible {
+            display: block;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 20px;
+            }
+
+            .form-section {
+                padding: 15px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Valoración de Vivienda</h1>
+        <form id="valuationForm">
+            <div class="form-section">
+                <h2>Datos de Contacto</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Nombre completo *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Teléfono *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Datos del Inmueble</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="location">Ciudad *</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Tipo de Vivienda *</label>
+                        <select id="type" name="type" required>
+                            <option value="">Seleccione tipo</option>
+                            <option value="piso">Piso</option>
+                            <option value="casa">Casa Unifamiliar</option>
+                            <option value="duplex">Dúplex</option>
+                            <option value="atico">Ático</option>
+                            <option value="estudio">Estudio</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="size">Tamaño (m²) *</label>
+                        <input type="number" id="size" name="size" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Antigüedad (años) *</label>
+                        <input type="number" id="age" name="age" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="bedrooms">Habitaciones *</label>
+                        <input type="number" id="bedrooms" name="bedrooms" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bathrooms">Baños *</label>
+                        <input type="number" id="bathrooms" name="bathrooms" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="condition">Estado de Conservación *</label>
+                    <select id="condition" name="condition" required>
+                        <option value="">Seleccione estado</option>
+                        <option value="excelente">Excelente</option>
+                        <option value="bueno">Bueno</option>
+                        <option value="regular">Regular</option>
+                        <option value="malo">Malo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Características Adicionales</h2>
+                <div class="amenities-grid">
+                    <label class="amenity-item">
+                        <input type="checkbox" name="amenities" value="pool"> Piscina
+                    </label>
+                    <label class="amenity-item">
+                        <input type="checkbox" name="amenities" value="garage"> Garaje
+                    </label>
+                    <label class="amenity-item">
+                        <input type="checkbox" name="amenities" value="garden"> Jardín
+                    </label>
+                    <label class="amenity-item">
+                        <input type="checkbox" name="amenities" value="storage"> Trastero
+                    </label>
+                    <label class="amenity-item">
+                        <input type="checkbox" name="amenities" value="elevator"> Ascensor
+                    </label>
+                    <label class="amenity-item">
+                        <input type="checkbox" name="amenities" value="security"> Seguridad 24h
+                    </label>
+                    <label class="amenity-item">
+                        <input type="checkbox" name="amenities" value="ac"> Aire Acondicionado
+                    </label>
+                    <label class="amenity-item">
+                        <input type="checkbox" name="amenities" value="heating"> Calefacción
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Documentación</h2>
+                <div class="form-group">
+                    <label>Imágenes (máx. 5)</label>
+                    <div class="file-upload">
+                        <input type="file" id="images" accept="image/*" multiple style="display: none">
+                        <button type="button" class="upload-btn" onclick="document.getElementById('images').click()">
+                            Subir imágenes
+                        </button>
+                        <span id="imageCount">0/5</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Observaciones</label>
+                    <textarea id="comments" name="comments" rows="3"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Calcular Valor Aproximado</button>
+
+            <div id="result" class="result">
+                <p class="result-value"></p>
+                <p class="result-note">*Este es un valor aproximado basado en los datos proporcionados y las condiciones actuales del mercado</p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('valuationForm');
+        const result = document.getElementById('result');
+        const imageInput = document.getElementById('images');
+        const imageCount = document.getElementById('imageCount');
+
+        // Precios base por ciudad (2024)
+        const baseLocationPrices = {
+            'madrid': 3500,
+            'barcelona': 3800,
+            'valencia': 2200,
+            'sevilla': 2000,
+            'bilbao': 2800,
+            'malaga': 2400,
+            'default': 2500
+        };
+
+        const typeMultipliers = {
+            'piso': 1.0,
+            'casa': 1.3,
+            'duplex': 1.2,
+            'atico': 1.4,
+            'estudio': 0.9
+        };
+
+        const conditionMultipliers = {
+            'excelente': 1.2,
+            'bueno': 1.0,
+            'regular': 0.8,
+            'malo': 0.6
+        };
+
+        const amenityValues = {
+            'pool': 30000,
+            'garage': 25000,
+            'garden': 20000,
+            'storage': 10000,
+            'elevator': 15000,
+            'security': 12000,
+            'ac': 8000,
+            'heating': 6000
+        };
+
+        // Validación de imágenes
+        imageInput.addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (files.length > 5) {
+                alert('Máximo 5 imágenes permitidas');
+                imageInput.value = '';
+            }
+            imageCount.textContent = `${Math.min(files.length, 5)}/5`;
+        });
+
+        // Validación del formulario
+        function validateForm() {
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            
+            const phoneRegex = /^[0-9]{9}$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!phoneRegex.test(phone)) {
+                alert('Por favor, introduce un número de teléfono válido (9 dígitos)');
+                return false;
+            }
+            
+            if (!emailRegex.test(email)) {
+                alert('Por favor, introduce un correo electrónico válido');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Cálculo de la valoración
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+
+            const formData = new FormData(form);
+            const location = formData.get('location').toLowerCase();
+            const type = formData.get('type');
+            const age = parseFloat(formData.get('age'));
+            const size = parseFloat(formData.get('size'));
+            const bedrooms = parseFloat(formData.get('bedrooms'));
+            const bathrooms = parseFloat(formData.get('bathrooms'));
+            const condition = formData.get('condition');
+            const amenities = formData.getAll('amenities');
+
+            // Cálculo del precio base
+            const basePrice = (baseLocationPrices[location] || baseLocationPrices.default) * size;
+
+            // Factor por antigüedad
+            const ageFactor = Math.max(0.7, 1 - (age * 0.01));
+
+            // Factor por habitaciones y baños
+            const bedroomMultiplier = 1 + ((bedrooms - 2) * 0.1);
+            const bathroomMultiplier = 1 + ((bathrooms - 1) * 0.1);
+
+            // Precio ajustado
+            let adjustedPrice = basePrice * 
+                typeMultipliers[type] * 
+                ageFactor * 
+                conditionMultipliers[condition] *
+                bedroomMultiplier *
+                bathroomMultiplier;
+
+            // Ajuste por tamaño
+            if (size > 150) adjustedPrice *= 0.95;
+            if (size > 300) adjustedPrice *= 0.9;
+
+            // Valor de amenidades
+            const amenitiesValue = amenities.reduce((acc, amenity) => 
+                acc + (amenityValues[amenity] || 0), 0);
+
+            // Precio final con ajuste de mercado
+            const finalPrice = (adjustedPrice + amenitiesValue) * 1.05;
+
+            // Mostrar resultado
+            result.classList.add('visible');
+            result.querySelector('.result-value').textContent = 
+                `Valor estimado: ${Math.round(finalPrice).toLocaleString('es-ES')} €`;
+        });
+    </script>
+</body>
+</html>
