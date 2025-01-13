@@ -5,139 +5,140 @@
     <meta charset="UTF-8">
     <meta name="referrer" content="origin">
     <title>Formulario de Valoración Inmobiliaria</title>
-    <style>
-        :root {
-            --color-primario: #FFB800;
-            --color-primario-oscuro: #CC9200;
-            --color-primario-claro: #FFD866;
-            --color-secundario: #2C2C2C;
-            --fondo-claro: #FFFAF0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
-        body {
-            background: var(--fondo-claro);
-            padding: 20px;
-            color: var(--color-secundario);
-        }
-
-        .contenedor {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-        }
-
-        h1 {
-            text-align: center;
-            color: var(--color-primario-oscuro);
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
-
-        .seccion-formulario {
-            margin-bottom: 30px;
-            padding: 20px;
-            background: var(--fondo-claro);
-            border-radius: 8px;
-        }
-
-        .seccion-formulario h2 {
-            color: var(--color-secundario);
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-
-        .rejilla-formulario {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .grupo-formulario {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
-        }
-
-        .rejilla-amenidades {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 10px;
-        }
-
-        .item-amenidad {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .item-amenidad input[type="checkbox"] {
-            width: auto;
-        }
-
-        .boton-enviar {
-            width: 100%;
-            padding: 12px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .boton-enviar:hover {
-            background: #1d4ed8;
-        }
-
-        .resultado {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        .resultado.visible {
-            display: block;
-        }
-    </style>
 </head>
+
+<style>
+    :root {
+        --color-primario: #FFB800;
+        --color-primario-oscuro: #CC9200;
+        --color-primario-claro: #FFD866;
+        --color-secundario: #2C2C2C;
+        --fondo-claro: #FFFAF0;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+        background: var(--fondo-claro);
+        padding: 20px;
+        color: var(--color-secundario);
+    }
+
+    .contenedor {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+
+    h1 {
+        text-align: center;
+        color: var(--color-primario-oscuro);
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    .seccion-formulario {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: var(--fondo-claro);
+        border-radius: 8px;
+    }
+
+    .seccion-formulario h2 {
+        color: var(--color-secundario);
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .rejilla-formulario {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .grupo-formulario {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+    }
+
+    .rejilla-amenidades {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 10px;
+    }
+
+    .item-amenidad {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .item-amenidad input[type="checkbox"] {
+        width: auto;
+    }
+
+    .boton-enviar {
+        width: 100%;
+        padding: 12px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .boton-enviar:hover {
+        background: #1d4ed8;
+    }
+
+    .resultado {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 6px;
+        text-align: center;
+    }
+
+    .resultado.visible {
+        display: block;
+    }
+</style>
 
 <body>
     <div class="contenedor">
@@ -149,15 +150,15 @@
                 <div class="rejilla-formulario">
                     <div class="grupo-formulario">
                         <label for="nombre">Nombre completo *</label>
-                        <input type="text" id="nombre" name="nombre" required>
+                        <input type="text" id="nombre" name="nombre_completo" required>
                     </div>
                     <div class="grupo-formulario">
                         <label for="telefono">Teléfono *</label>
-                        <input type="tel" id="telefono" name="telefono" required>
+                        <input type="tel" id="telefono" name="numero_telefono" required>
                     </div>
                     <div class="grupo-formulario">
                         <label for="correo">Correo electrónico *</label>
-                        <input type="email" id="correo" name="correo" required>
+                        <input type="email" id="correo" name="correo_electronico" required>
                     </div>
                 </div>
             </div>
@@ -167,11 +168,11 @@
                 <div class="rejilla-formulario">
                     <div class="grupo-formulario">
                         <label for="ubicacion">Ciudad *</label>
-                        <input type="text" id="ubicacion" name="ubicacion" required>
+                        <input type="text" id="ubicacion" name="ciudad" required>
                     </div>
                     <div class="grupo-formulario">
                         <label for="tipo">Tipo de Vivienda *</label>
-                        <select id="tipo" name="tipo" required>
+                        <select id="tipo" name="tipo_vivienda" required>
                             <option value="">Seleccione tipo</option>
                             <option value="piso">Piso</option>
                             <option value="casa">Casa Unifamiliar</option>
@@ -185,39 +186,39 @@
                 <div class="rejilla-formulario">
                     <div class="grupo-formulario">
                         <label for="tamano">Tamaño (m²) *</label>
-                        <input type="number" id="tamano" name="tamano" min="1" required>
+                        <input type="number" id="tamano" name="metros_cuadrados" min="1" required>
                     </div>
                     <div class="grupo-formulario">
                         <label for="edad">Antigüedad (años) *</label>
-                        <input type="number" id="edad" name="edad" min="0" required>
+                        <input type="number" id="edad" name="anos_antiguedad" min="0" required>
                     </div>
                 </div>
 
                 <div class="rejilla-formulario">
                     <div class="grupo-formulario">
                         <label for="habitaciones">Habitaciones *</label>
-                        <input type="number" id="habitaciones" name="habitaciones" min="0" required>
+                        <input type="number" id="habitaciones" name="numero_habitaciones" min="0" required>
                     </div>
                     <div class="grupo-formulario">
                         <label for="banos">Baños *</label>
-                        <input type="number" id="banos" name="banos" min="0" required>
+                        <input type="number" id="banos" name="numero_banos" min="0" required>
                     </div>
                 </div>
 
                 <div class="rejilla-formulario">
                     <div class="grupo-formulario">
                         <label for="direccion">Dirección *</label>
-                        <input type="text" id="direccion" name="direccion" required>
+                        <input type="text" id="direccion" name="direccion_calle" required>
                     </div>
                     <div class="grupo-formulario">
                         <label for="numero">Número *</label>
-                        <input type="number" id="numero" name="numero" required>
+                        <input type="number" id="numero" name="numero_portal" required>
                     </div>
                 </div>
 
                 <div class="grupo-formulario">
                     <label for="estado">Estado de Conservación *</label>
-                    <select id="estado" name="estado" required>
+                    <select id="estado" name="estado_conservacion" required>
                         <option value="">Seleccione estado</option>
                         <option value="excelente">Excelente</option>
                         <option value="bueno">Bueno</option>
@@ -231,28 +232,29 @@
                 <h2>Características Adicionales</h2>
                 <div class="rejilla-amenidades">
                     <label class="item-amenidad">
-                        <input type="checkbox" name="amenidades" value="piscina"> Piscina
+                        <input type="checkbox" name="caracteristicas_adicionales" value="piscina"> Piscina
                     </label>
                     <label class="item-amenidad">
-                        <input type="checkbox" name="amenidades" value="garaje"> Garaje
+                        <input type="checkbox" name="caracteristicas_adicionales" value="garaje"> Garaje
                     </label>
                     <label class="item-amenidad">
-                        <input type="checkbox" name="amenidades" value="jardin"> Jardín
+                        <input type="checkbox" name="caracteristicas_adicionales" value="jardin"> Jardín
                     </label>
                     <label class="item-amenidad">
-                        <input type="checkbox" name="amenidades" value="trastero"> Trastero
+                        <input type="checkbox" name="caracteristicas_adicionales" value="trastero"> Trastero
                     </label>
                     <label class="item-amenidad">
-                        <input type="checkbox" name="amenidades" value="ascensor"> Ascensor
+                        <input type="checkbox" name="caracteristicas_adicionales" value="ascensor"> Ascensor
                     </label>
                     <label class="item-amenidad">
-                        <input type="checkbox" name="amenidades" value="seguridad"> Seguridad 24h
+                        <input type="checkbox" name="caracteristicas_adicionales" value="seguridad"> Seguridad 24h
                     </label>
                     <label class="item-amenidad">
-                        <input type="checkbox" name="amenidades" value="ac"> Aire Acondicionado
+                        <input type="checkbox" name="caracteristicas_adicionales" value="aire_acondicionado"> Aire
+                        Acondicionado
                     </label>
                     <label class="item-amenidad">
-                        <input type="checkbox" name="amenidades" value="calefaccion"> Calefacción
+                        <input type="checkbox" name="caracteristicas_adicionales" value="calefaccion"> Calefacción
                     </label>
                 </div>
             </div>
@@ -260,7 +262,7 @@
             <div class="seccion-formulario">
                 <div class="grupo-formulario">
                     <label for="comentarios">Observaciones</label>
-                    <textarea id="comentarios" name="comentarios" rows="3"></textarea>
+                    <textarea id="comentarios" name="observaciones_adicionales" rows="3"></textarea>
                 </div>
             </div>
 
@@ -271,7 +273,6 @@
             </div>
         </form>
     </div>
-
 </body>
 
 </html>
